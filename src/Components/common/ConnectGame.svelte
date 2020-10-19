@@ -304,7 +304,7 @@
   }
   button.options {
     display: inline-block;
-    font-size: 4.85rem;
+    font-size: xxx-large;
     border-radius: 50%;
     height: 100%;
     width: 100%;
@@ -332,9 +332,12 @@
       transform: scale(1) rotate(0);
     }
   }
-  @media only screen and (max-width: 900px) {
-    button {
-      font-size: xxx-large;
+  @media only screen and (min-width: 900px) {
+    button.options {
+      font-size: 4.86rem;
+    }
+    .game-element {
+      margin-left: 10%;
     }
   }
 </style>

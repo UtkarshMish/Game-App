@@ -5,7 +5,6 @@
   import ConnectGame from "./common/ConnectGame.svelte";
   import Scorelist from "./common/Scorelist.svelte";
   import { age, name } from "../store/store";
-  import { getScores } from "../utils/scores";
 
   let isNotValid = true;
   onMount(async () => {
@@ -48,6 +47,9 @@
   @media only screen and (max-width: 900px) {
     .user__info {
       border: none;
+    }
+    div.user__info {
+      max-width: unset;
     }
   }
 </style>
