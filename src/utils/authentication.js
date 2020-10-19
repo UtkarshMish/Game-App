@@ -7,7 +7,7 @@ const userAuthenticated = () =>
   }
   return true;
 }
-const clearAuthentication = () =>
+export const clearAuthentication = () =>
 {
   localStorage.clear();
 }

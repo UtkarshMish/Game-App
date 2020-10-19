@@ -2,9 +2,13 @@
   import { onMount } from "svelte";
   import { redirect } from "page";
   import userAuthenticated from "../utils/authentication";
+  import { setScores, getScores } from "../utils/scores";
+
   import ConnectGame from "./common/ConnectGame.svelte";
+  import Scorelist from "./common/Scorelist.svelte";
   export let name = "";
   export let age = "";
+  let scores = getScores();
   let isNotValid = true;
   onMount(async () => {
     name = String(localStorage.getItem("name")) || name;
@@ -15,6 +19,10 @@
       return;
     }
   });
+  function updateScore(values) {
+    scores = [...values];
+    setScores(values);
+  }
 </script>
 
 <style>
@@ -64,7 +72,10 @@
         <p>Age:&nbsp;</p>
         <p>{age}</p>
       </div>
+      {#if scores.length !== 0}
+        <Scorelist {scores} />
+      {/if}
     </div>
-    <ConnectGame {name} />
+    <ConnectGame {name} {scores} {updateScore} />
   </div>
 {/if}

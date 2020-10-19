@@ -1,7 +1,9 @@
 <script>
   import { onMount } from "svelte";
 
-  export let name = name;
+  export let name = "";
+  export let scores = [];
+  export let updateScore = (scores) => setScores(scores);
   onMount(() => {
     gameButtons = document.querySelectorAll("button");
     createMatrix();
@@ -16,6 +18,11 @@
   let player = playerOne;
   let turn_info = player + " : Your turn to pick the chip";
   const reportWin = (row, column) => {
+    scores = [
+      ...scores,
+      { name, score: player === playerOne ? "Won" : "Lost" },
+    ];
+    updateScore(scores);
     gameOver = true;
     gameOverMessage =
       "GAME OVER ! " + player + " won at " + (row + 1) + " " + (column + 1);
@@ -86,8 +93,23 @@
     }
     return c;
   };
+  //CHECK TOP SIDE
+  const checkTop = (index, k, color, c) => {
+    for (let i = 0; i < 3; i++) {
+      if (gameMatrix[index] && gameMatrix[index][k]) {
+        if (gameMatrix[index][k].value === color) {
+          c += 1;
+          index--;
+        } else {
+          c = 0;
+          index--;
+        }
+      } else return 0;
+    }
+    return c;
+  };
   //CHECK Diagonal SIDE
-  const checkDiagonalRight = (index, k, color, c) => {
+  const checkDiagonalTopRight = (index, k, color, c) => {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -103,7 +125,7 @@
     }
     return c;
   };
-  const checkDiagonalLeft = (index, k, color, c) => {
+  const checkDiagonalTopLeft = (index, k, color, c) => {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -113,6 +135,37 @@
         } else {
           c = 0;
 
+          index--;
+        }
+      } else return 0;
+    }
+    return c;
+  };
+  const checkDiagonalBottomLeft = (index, k, color, c) => {
+    for (let i = 0; i < 3; i++) {
+      if (gameMatrix[index] && gameMatrix[index][k]) {
+        if (gameMatrix[index][k].value === color) {
+          c += 1;
+          index--;
+          k++;
+        } else {
+          c = 0;
+
+          index--;
+        }
+      } else return 0;
+    }
+    return c;
+  };
+  const checkDiagonalBottomRight = (index, k, color, c) => {
+    for (let i = 0; i < 3; i++) {
+      if (gameMatrix[index] && gameMatrix[index][k]) {
+        if (gameMatrix[index][k].value === color) {
+          c += 1;
+          index--;
+          k--;
+        } else {
+          c = 0;
           index--;
         }
       } else return 0;
@@ -130,10 +183,23 @@
         gameMatrix[index][k - 1].value === color
           ? gameMatrix[index][k + 1].value === color
             ? 3
-            : null
-          : null;
+            : 0
+          : 0;
     }
-
+    if (
+      gameMatrix[index - 1] &&
+      gameMatrix[index + 1] &&
+      gameMatrix[index][k] &&
+      gameMatrix[index - 1][k] &&
+      gameMatrix[index + 1][k]
+    ) {
+      c =
+        gameMatrix[index - 1][k].value === color
+          ? gameMatrix[index + 1][k].value === color
+            ? 3
+            : 0
+          : 0;
+    }
     return c;
   };
 
@@ -144,6 +210,8 @@
   };
   const checkMatrix = (index, k, color) => {
     let count = 0;
+    count = checkTop(index, k, color, (count = 0));
+    checkIt(count, index, k);
     count = checkBottom(index, k, color, (count = 0));
     checkIt(count, index, k);
     count = checkLeft(index, k, color, (count = 0));
@@ -152,9 +220,13 @@
     checkIt(count, index, k);
     count = checkMiddle(index, k, color, (count = 0));
     checkIt(count, index, k);
-    count = checkDiagonalRight(index, k, color, (count = 0));
+    count = checkDiagonalTopRight(index, k, color, (count = 0));
     checkIt(count, index, k);
-    count = checkDiagonalLeft(index, k, color, (count = 0));
+    count = checkDiagonalTopLeft(index, k, color, (count = 0));
+    checkIt(count, index, k);
+    count = checkDiagonalBottomLeft(index, k, color, (count = 0));
+    checkIt(count, index, k);
+    count = checkDiagonalBottomRight(index, k, color, (count = 0));
     checkIt(count, index, k);
   };
   function handleClick(e) {
@@ -253,9 +325,9 @@
       <h3 id="game-over">{gameOverMessage}</h3>
     {/if}
     <table>
-      {#each [0, 1, 2, 3, 4] as column}
+      {#each [...Array(5).keys()] as column}
         <tr name={column}>
-          {#each [0, 1, 2, 3, 4, 5, 6] as row}
+          {#each [...Array(7).keys()] as row}
             <td>
               <button
                 type="button"
