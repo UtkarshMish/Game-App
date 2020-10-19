@@ -11,6 +11,9 @@
   let gameOverMessage = null;
   let playerColor = "blue";
   let player = playerOne;
+  let rowValue = [...Array(7).keys()];
+  let colValue = [...Array(5).keys()];
+  let defaultColor = "rgb(107, 106, 106)";
   onMount(() => {
     scores.update((item) => (item = getScores()));
     gameButtons = document.querySelectorAll("button");
@@ -244,11 +247,28 @@
     checkMatrix(k, i, playerColor);
     switchPlayer();
   }
+  function handleReset() {
+    gameOver = false;
+    player = playerOne;
+    gameOverMessage = null;
+    playerColor = "blue";
+    turn_info = player + " : Your turn to pick the chip";
+    for (let i = 0, k = 0; i < 5; i++) {
+      for (let j = 0; j < 7; j++) {
+        gameMatrix[i][j].style.background = defaultColor;
+        gameMatrix[i][j].value = null;
+      }
+    }
+  }
 </script>
 
 <style>
   div {
     line-height: 1;
+  }
+  button.reset-button {
+    color: black;
+    background: darkorange;
   }
   h1 {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -282,7 +302,7 @@
   .game {
     text-align: center;
   }
-  button {
+  button.options {
     display: inline-block;
     font-size: 4.85rem;
     border-radius: 50%;
@@ -293,7 +313,7 @@
     background: rgb(107, 106, 106);
     transition: all 0.5s;
   }
-  button:active {
+  button.options:active {
     animation: slideIn 0.2s ease-in;
   }
   div.game-element {
@@ -323,22 +343,27 @@
   <div class="game-container">
     <h1>Welcome to Connect Three!</h1>
     <h4>The objective of the game is to connect three chips in a row!</h4>
-    <h5 id="turn-info">{turn_info}</h5>
+    {#if turn_info}
+      <h5 id="turn-info">{turn_info}</h5>
+    {/if}
   </div>
 
   <div class="game">
     {#if gameOverMessage}
       <h3 id="game-over">{gameOverMessage}</h3>
+      <button class="reset-button" on:click={handleReset}>RESET GAME</button>
     {/if}
     <table>
-      {#each [0, 1, 2, 3, 4, 5] as column}
+      {#each colValue as column}
         <tr name={column}>
-          {#each [0, 1, 2, 3, 4, 5, 6] as row}
+          {#each rowValue as row}
             <td>
               <button
                 type="button"
+                class="options"
                 name={column}
                 key={row}
+                style="background:{defaultColor};"
                 on:click={handleClick}
                 disabled={gameOver} />
             </td>
