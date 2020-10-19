@@ -325,9 +325,9 @@
       <h3 id="game-over">{gameOverMessage}</h3>
     {/if}
     <table>
-      {#each [...Array(5).keys()] as column}
+      {#each [0, 1, 2, 3, 4, 5] as column}
         <tr name={column}>
-          {#each [...Array(7).keys()] as row}
+          {#each [0, 1, 2, 3, 4, 5, 6] as row}
             <td>
               <button
                 type="button"
