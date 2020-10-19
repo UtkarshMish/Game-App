@@ -3,16 +3,17 @@
   import { onMount } from "svelte";
   import userAuthenticated from "../utils/authentication";
   import Userform from "./common/Userform.svelte";
+  import { age, name } from "../store/store";
+  let isNotValid = true;
   onMount(() => {
-    if (userAuthenticated()) redirect("/game");
+    isNotValid = !userAuthenticated($name, $age);
+    if (!isNotValid) redirect("/game");
   });
   const nameHolder = "Enter your Name: ";
-  let name = "",
-    age = "";
   const handleSubmit = () => {
     if (name.length !== 0 && age.length !== 0) {
-      localStorage.setItem("name", name);
-      localStorage.setItem("age", age);
+      localStorage.setItem("name", $name);
+      localStorage.setItem("age", $age);
       show("/game");
     }
   };
@@ -51,7 +52,7 @@
   }
 </style>
 
-{#if !userAuthenticated()}
+{#if isNotValid}
   <div class="info__container">
     <div class="heading">
       <h3 class="main__heading">Enter Your Details</h3>
@@ -59,8 +60,8 @@
     <div class="body">
       <Userform
         valueHolderA={nameHolder}
-        bind:valueA={name}
-        bind:valueB={age}
+        bind:valueA={$name}
+        bind:valueB={$age}
         {handleSubmit} />
     </div>
   </div>

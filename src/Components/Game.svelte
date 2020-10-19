@@ -2,27 +2,19 @@
   import { onMount } from "svelte";
   import { redirect } from "page";
   import userAuthenticated from "../utils/authentication";
-  import { setScores, getScores } from "../utils/scores";
-
   import ConnectGame from "./common/ConnectGame.svelte";
   import Scorelist from "./common/Scorelist.svelte";
-  export let name = "";
-  export let age = "";
-  let scores = getScores();
+  import { age, name } from "../store/store";
+  import { getScores } from "../utils/scores";
+
   let isNotValid = true;
   onMount(async () => {
-    name = String(localStorage.getItem("name")) || name;
-    age = parseInt(localStorage.getItem("age")) || name;
-    isNotValid = !userAuthenticated();
+    isNotValid = !userAuthenticated($name, $age);
     if (isNotValid) {
       redirect("/");
       return;
     }
   });
-  function updateScore(values) {
-    scores = [...values];
-    setScores(values);
-  }
 </script>
 
 <style>
@@ -66,16 +58,14 @@
       <h3>Player Info</h3>
       <div class="info">
         <p>Player Name:&nbsp;</p>
-        <p>{name}</p>
+        <p>{$name}</p>
       </div>
       <div class="info">
         <p>Age:&nbsp;</p>
-        <p>{age}</p>
+        <p>{$age}</p>
       </div>
-      {#if scores.length !== 0}
-        <Scorelist {scores} />
-      {/if}
+      <Scorelist />
     </div>
-    <ConnectGame {name} {scores} {updateScore} />
+    <ConnectGame />
   </div>
 {/if}

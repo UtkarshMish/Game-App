@@ -1,9 +1,8 @@
 <script>
   import { clearScore } from "../../utils/scores";
-
-  export let scores = [];
+  import { scores } from "../../store/store";
   function handleClear() {
-    scores = [];
+    scores.set([]);
     clearScore();
   }
 </script>
@@ -38,7 +37,7 @@
   }
 </style>
 
-{#if scores.length !== 0}
+{#if $scores != null && $scores.length !== 0}
   <div class="score-container">
     <div class="score-heading">
       <h2>Score Board</h2>
@@ -53,7 +52,7 @@
           </tr>
         </thead>
         <tbody>
-          {#each scores as { name, score }}
+          {#each $scores as { name, score }}
             <tr>
               <td>{name}</td>
               <td name={score}>{score}</td>

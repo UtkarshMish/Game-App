@@ -1,34 +1,40 @@
 <script>
   import { onMount } from "svelte";
+  import { getScores, setScores } from "../../utils/scores";
+  import { name, scores } from "../../store/store";
 
-  export let name = "";
-  export let scores = [];
-  export let updateScore = (scores) => setScores(scores);
-  onMount(() => {
-    gameButtons = document.querySelectorAll("button");
-    createMatrix();
-  });
   let gameOver = false;
   let gameButtons = [];
   let gameMatrix = [[]];
-  let playerOne = name;
-  let playerTwo = "CPU";
+  const playerOne = $name;
+  const playerTwo = "CPU";
   let gameOverMessage = null;
   let playerColor = "blue";
   let player = playerOne;
+  onMount(() => {
+    scores.update((item) => (item = getScores()));
+    gameButtons = document.querySelectorAll("button");
+    createMatrix();
+  });
   let turn_info = player + " : Your turn to pick the chip";
-  const reportWin = (row, column) => {
-    scores = [
-      ...scores,
-      { name, score: player === playerOne ? "Won" : "Lost" },
-    ];
-    updateScore(scores);
+  function reportWin(row, column) {
     gameOver = true;
     gameOverMessage =
       "GAME OVER ! " + player + " won at " + (row + 1) + " " + (column + 1);
     gameOver = true;
-  };
-  const switchPlayer = () => {
+    scores.update(
+      (item) =>
+        (item = [
+          ...$scores,
+          {
+            name: playerOne,
+            score: player === playerOne ? "Won" : "Lost",
+          },
+        ])
+    );
+    setScores($scores);
+  }
+  function switchPlayer() {
     if (gameOver) {
       turn_info = "Finished ! Refresh to play again !";
     } else {
@@ -36,8 +42,8 @@
       player = player === playerTwo ? playerOne : playerTwo;
       turn_info = player + " : Your Turn pick any  " + playerColor + " chip .";
     }
-  };
-  const createMatrix = () => {
+  }
+  function createMatrix() {
     for (let i = 0, k = 0; i < 5; i++) {
       for (let j = 0; j < 7; j++) {
         gameMatrix[i][j] = gameButtons[k];
@@ -45,10 +51,10 @@
       }
       if (i + 1 != 5) gameMatrix[i + 1] = [];
     }
-  };
+  }
 
   //CHECK LEFT SIDE
-  const checkLeft = (index, k, color, c) => {
+  function checkLeft(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -61,9 +67,9 @@
       } else return 0;
     }
     return c;
-  };
+  }
   //CHECK RIGHT SIDE
-  const checkRight = (index, k, color, c) => {
+  function checkRight(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -76,10 +82,10 @@
       } else return 0;
     }
     return c;
-  };
+  }
 
   //CHECK BOTTOM SIDE
-  const checkBottom = (index, k, color, c) => {
+  function checkBottom(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -92,9 +98,9 @@
       } else return 0;
     }
     return c;
-  };
+  }
   //CHECK TOP SIDE
-  const checkTop = (index, k, color, c) => {
+  function checkTop(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -107,9 +113,9 @@
       } else return 0;
     }
     return c;
-  };
+  }
   //CHECK Diagonal SIDE
-  const checkDiagonalTopRight = (index, k, color, c) => {
+  function checkDiagonalTopRight(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -124,8 +130,8 @@
       } else return 0;
     }
     return c;
-  };
-  const checkDiagonalTopLeft = (index, k, color, c) => {
+  }
+  function checkDiagonalTopLeft(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -140,8 +146,8 @@
       } else return 0;
     }
     return c;
-  };
-  const checkDiagonalBottomLeft = (index, k, color, c) => {
+  }
+  function checkDiagonalBottomLeft(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -156,8 +162,8 @@
       } else return 0;
     }
     return c;
-  };
-  const checkDiagonalBottomRight = (index, k, color, c) => {
+  }
+  function checkDiagonalBottomRight(index, k, color, c) {
     for (let i = 0; i < 3; i++) {
       if (gameMatrix[index] && gameMatrix[index][k]) {
         if (gameMatrix[index][k].value === color) {
@@ -171,9 +177,9 @@
       } else return 0;
     }
     return c;
-  };
+  }
   //CHECK Middle SIDE
-  const checkMiddle = (index, k, color, c) => {
+  function checkMiddle(index, k, color, c) {
     if (
       gameMatrix[index][k] &&
       gameMatrix[index][k - 1] &&
@@ -201,14 +207,14 @@
           : 0;
     }
     return c;
-  };
+  }
 
-  const checkIt = (count, index, k) => {
+  function checkIt(count, index, k) {
     if (count === 3) {
       reportWin(index, k);
     }
-  };
-  const checkMatrix = (index, k, color) => {
+  }
+  function checkMatrix(index, k, color) {
     let count = 0;
     count = checkTop(index, k, color, (count = 0));
     checkIt(count, index, k);
@@ -228,7 +234,7 @@
     checkIt(count, index, k);
     count = checkDiagonalBottomRight(index, k, color, (count = 0));
     checkIt(count, index, k);
-  };
+  }
   function handleClick(e) {
     e.target.value = playerColor;
     e.target.style.background = playerColor;

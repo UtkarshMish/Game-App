@@ -1,12 +1,13 @@
+
 export function getScores()
 {
-  const scores = JSON.parse(localStorage.getItem("scores")) || [];
-  return scores;
+  const score = JSON.parse(localStorage.getItem("scores")) || [];
+  return score;
 }
-export function setScores(scores)
+export function setScores(score)
 {
-  const values = JSON.stringify(scores);
-  localStorage.setItem("scores", values);
+
+  localStorage.setItem("scores", JSON.stringify(score));
 }
 export function clearScore()
 {
