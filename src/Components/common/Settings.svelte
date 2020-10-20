@@ -24,6 +24,9 @@
     const itemCheck = new RegExp().compile("^[A-Za-z]+[A-za-z ]*$");
     if (newName && itemCheck.test(newName))
       name.update((newValue) => (newValue = newName));
+    else if (newName.length < 2) {
+      name.update((newValue) => (newValue = localStorage.getItem("name")));
+    }
   }
 </script>
 
