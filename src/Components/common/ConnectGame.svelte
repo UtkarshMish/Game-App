@@ -184,7 +184,7 @@
   }
   //CHECK Middle SIDE
   function checkMiddle(index, k, color, c) {
-    if (gameMatrix[index][k] && gameMatrix[index][k] == color) {
+    if (gameMatrix[index][k] && gameMatrix[index][k].value == color) {
       if (gameMatrix[index][k - 1] && gameMatrix[index][k + 1]) {
         c =
           gameMatrix[index][k - 1].value === color
@@ -193,19 +193,39 @@
               : 0
             : 0;
       }
-      if (
-        gameMatrix[index - 1] &&
-        gameMatrix[index + 1] &&
-        gameMatrix[index - 1][k] &&
-        gameMatrix[index + 1][k]
-      ) {
+      if (gameMatrix[index - 1] && gameMatrix[index + 1] && c != 3) {
         c =
           gameMatrix[index - 1][k].value === color
             ? gameMatrix[index + 1][k].value === color
               ? 3
               : 0
             : 0;
+        if (
+          c != 3 &&
+          gameMatrix[index - 1][k - 1] &&
+          gameMatrix[index + 1][k + 1]
+        ) {
+          c =
+            gameMatrix[index - 1][k - 1].value === color
+              ? gameMatrix[index + 1][k + 1].value === color
+                ? 3
+                : 0
+              : 0;
+        }
+        if (
+          gameMatrix[index - 1][k + 1] &&
+          gameMatrix[index + 1][k - 1] &&
+          c != 3
+        ) {
+          c =
+            gameMatrix[index - 1][k + 1].value === color
+              ? gameMatrix[index + 1][k - 1].value === color
+                ? 3
+                : 0
+              : 0;
+        }
       }
+      return c;
     }
     return c;
   }
@@ -315,7 +335,7 @@
   }
   button.options {
     display: inline-block;
-    font-size: xxx-large;
+    font-size: 3.8rem;
     border-radius: 50%;
     height: 100%;
     width: 100%;

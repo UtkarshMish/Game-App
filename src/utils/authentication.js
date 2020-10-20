@@ -7,6 +7,11 @@ const userAuthenticated = (name, age) =>
 }
 export const clearAuthentication = () =>
 {
-  localStorage.clear();
+  localStorage.removeItem("name");
+  localStorage.removeItem("age");
 }
 export default userAuthenticated;
+export const setName = (name) =>
+{
+  localStorage.setItem("name", name);
+}
