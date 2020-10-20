@@ -3,7 +3,7 @@
 
   import { age, name } from "../../store/store";
   import { redirect } from "page";
-
+  let newName = $name;
   let showName = false;
   function handleQuit() {
     clearAuthentication();
@@ -20,6 +20,11 @@
     MEDIUM: "medium",
     HARD: "hard",
   };
+  function setNewName() {
+    const itemCheck = new RegExp().compile("^[A-Za-z]+[A-za-z ]*$");
+    if (newName && itemCheck.test(newName))
+      name.update((newValue) => (newValue = newName));
+  }
 </script>
 
 <style>
@@ -69,10 +74,12 @@
   <form on:submit|preventDefault={handleNameChange} class="option">
     {#if showName}
       <input
+        on:keyup={setNewName}
         type="text"
-        bind:value={$name}
+        bind:value={newName}
         pattern="^[A-Za-z ]+$"
         label="Enter Only Alphabets"
+        maxlength={20}
         required />
     {/if}
     <button type="submit">{!showName ? 'Change Name' : 'Set'}</button>
