@@ -184,31 +184,28 @@
   }
   //CHECK Middle SIDE
   function checkMiddle(index, k, color, c) {
-    if (
-      gameMatrix[index][k] &&
-      gameMatrix[index][k - 1] &&
-      gameMatrix[index][k + 1]
-    ) {
-      c =
-        gameMatrix[index][k - 1].value === color
-          ? gameMatrix[index][k + 1].value === color
-            ? 3
-            : 0
-          : 0;
-    }
-    if (
-      gameMatrix[index - 1] &&
-      gameMatrix[index + 1] &&
-      gameMatrix[index][k] &&
-      gameMatrix[index - 1][k] &&
-      gameMatrix[index + 1][k]
-    ) {
-      c =
-        gameMatrix[index - 1][k].value === color
-          ? gameMatrix[index + 1][k].value === color
-            ? 3
-            : 0
-          : 0;
+    if (gameMatrix[index][k] && gameMatrix[index][k] == color) {
+      if (gameMatrix[index][k - 1] && gameMatrix[index][k + 1]) {
+        c =
+          gameMatrix[index][k - 1].value === color
+            ? gameMatrix[index][k + 1].value === color
+              ? 3
+              : 0
+            : 0;
+      }
+      if (
+        gameMatrix[index - 1] &&
+        gameMatrix[index + 1] &&
+        gameMatrix[index - 1][k] &&
+        gameMatrix[index + 1][k]
+      ) {
+        c =
+          gameMatrix[index - 1][k].value === color
+            ? gameMatrix[index + 1][k].value === color
+              ? 3
+              : 0
+            : 0;
+      }
     }
     return c;
   }
@@ -271,7 +268,6 @@
     gameMatrix[i][j].value = playerColor;
     gameMatrix[i][j].style.background = playerColor;
     gameMatrix[i][j].disabled = true;
-    console.log(gameMatrix);
     checkMatrix(i, j, playerColor);
     switchPlayer();
   }
