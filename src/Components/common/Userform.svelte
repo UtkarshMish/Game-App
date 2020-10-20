@@ -109,7 +109,9 @@
         type="radio"
         name="game_type"
         value="single-player"
-        id="single-player" /></label>
+        id="single-player"
+        checked
+        required /></label>
     <label for="multi-player">Multi Player
       <input
         type="radio"
