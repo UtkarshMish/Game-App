@@ -332,9 +332,9 @@
     animation: slideIn 0.2s ease-in;
   }
   div.game-element {
-    align-self: center;
     min-width: 25%;
-    margin-left: 10%;
+    margin: 0 5%;
+    flex: auto;
   }
   @keyframes slideIn {
     0% {
@@ -350,9 +350,6 @@
   @media only screen and (min-width: 900px) {
     button.options {
       font-size: 4.86rem;
-    }
-    .game-element {
-      margin-left: 10%;
     }
   }
 </style>

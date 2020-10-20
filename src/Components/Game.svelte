@@ -5,6 +5,7 @@
   import ConnectGame from "./common/ConnectGame.svelte";
   import Scorelist from "./common/Scorelist.svelte";
   import { age, name } from "../store/store";
+  import Settings from "./common/Settings.svelte";
 
   let isNotValid = true;
   onMount(async () => {
@@ -44,11 +45,23 @@
     font: message-box;
     justify-content: space-between;
   }
+  div.game__settings {
+    display: flex;
+    width: inherit;
+    max-width: 15%;
+    border-left: 2px groove #660b0bde;
+    margin-left: 1rem;
+    padding: 0 5%;
+    border-radius: 1vmax;
+    justify-content: center;
+  }
   @media only screen and (max-width: 900px) {
-    .user__info {
+    .user__info,
+    div.game__settings {
       border: none;
     }
-    div.user__info {
+    div.user__info,
+    div.game__settings {
       max-width: unset;
     }
   }
@@ -69,5 +82,8 @@
       <Scorelist />
     </div>
     <ConnectGame />
+    <div class="game__settings">
+      <Settings />
+    </div>
   </div>
 {/if}
