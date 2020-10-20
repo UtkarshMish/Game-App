@@ -19,7 +19,7 @@
   }
   function checkName(e) {
     name = String(e.target.value);
-    const regex = new RegExp(/^[A-Za-z ]+$/);
+    const regex = new RegExp(/^[A-Za-z]+[A-Za-z ]*$/);
     if (name != null && regex.test(name)) {
       Errors[1].error = null;
       valueA = name;
@@ -56,6 +56,33 @@
     font-size: x-large;
     margin: 1rem;
     background-color: beige;
+    align-self: center;
+    background: rgba(44, 44, 3, 0.801);
+    color: azure;
+  }
+  input[type="radio"] {
+    height: 26px;
+    width: 26px;
+  }
+  label {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+  }
+  label {
+    border: 1px solid azure;
+    padding: 0 3%;
+    border-radius: 1rem;
+    margin: auto 1px;
+  }
+  div.game__type {
+    display: flex;
+    font-size: large;
+    color: azure;
+    justify-content: center;
+  }
+  input::placeholder {
+    color: rgba(240, 255, 255, 0.74);
   }
   input::selection {
     background-color: rgb(202, 194, 194);
@@ -76,6 +103,20 @@
     on:input={checkName}
     required />
   <input type="date" on:input={setAge} required />
+  <div class="game__type">
+    <label for="single-player">Single Player
+      <input
+        type="radio"
+        name="game_type"
+        value="single-player"
+        id="single-player" /></label>
+    <label for="multi-player">Multi Player
+      <input
+        type="radio"
+        name="game_type"
+        value="multi-player"
+        id="multi-player" /></label>
+  </div>
   <ul style="text-align:left;">
     {#each Errors as errorValues}
       {#if errorValues.error}
@@ -83,5 +124,5 @@
       {/if}
     {/each}
   </ul>
-  <input type="submit" class="submit" value="Start" />
+  <input type="submit" class="submit" value="Start Game" />
 </form>

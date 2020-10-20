@@ -21,7 +21,7 @@
 
 <style>
   div.info__container {
-    margin-top: 10rem;
+    margin-top: 8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,9 +31,10 @@
     padding: 2.5rem 0;
     /* border: 1px groove #660b0bde; */
     border-image: space;
-    -moz-box-shadow: inset 0 0 10px black;
-    -webkit-box-shadow: inset 0 0 10px black;
-    box-shadow: inset 1rem 1rem 10rem #660b0bde;
+    border: 1px groove #143a4962;
+    -moz-box-shadow: inset 0rem 0rem 5rem #143a4962;
+    -webkit-box-shadow: inset 0rem 0rem 5rem #143a4962;
+    box-shadow: inset 0rem 0rem 5rem #143a4962;
     clip-path: polygon(
       0 10%,
       10% 0,
@@ -51,17 +52,20 @@
       rgba(182, 68, 68, 0.692)
     );
   }
+
   div.heading {
     text-align: center;
     font: bolder 2rem menu;
-    color: #f1d5f0;
-    border-bottom: 3px groove #660b0bde;
+    color: greenyellow;
+    border-bottom: 3px groove #143a4962;
     width: 100%;
-    margin-top: -2rem;
     box-sizing: content-box;
   }
   div.body {
     font: normal large;
+  }
+  h3.main__heading {
+    margin: 1rem;
   }
 </style>
 

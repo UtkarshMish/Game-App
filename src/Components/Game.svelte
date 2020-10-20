@@ -55,6 +55,13 @@
     border-radius: 1vmax;
     justify-content: center;
   }
+  h3 {
+    font-size: 2rem;
+    border-bottom: 4px groove whitesmoke;
+    margin: 1rem 3rem;
+    padding: 1rem;
+  }
+
   @media only screen and (max-width: 900px) {
     .user__info,
     div.game__settings {

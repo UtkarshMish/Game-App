@@ -12,6 +12,10 @@
     display: flex;
     justify-content: center;
   }
+  div.score-container {
+    border-top: 4px groove #660b0bde;
+    border-radius: 1.2rem;
+  }
   table,
   td,
   th {
