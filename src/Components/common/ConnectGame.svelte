@@ -3,7 +3,7 @@
   import { getScores, setScores } from "../../utils/scores";
   import { name, scores } from "../../store/store";
 
-  let gameOver = false;
+  let buttonDisabled = false;
   let gameButtons = [];
   let gameMatrix = [[]];
   const playerOne = $name;
@@ -19,12 +19,13 @@
     gameButtons = document.querySelectorAll("button");
     createMatrix();
   });
+
   let turn_info = player + " : Your turn to pick the chip";
   function reportWin(row, column) {
-    gameOver = true;
+    buttonDisabled = true;
     gameOverMessage =
       "GAME OVER ! " + player + " won at " + (row + 1) + " " + (column + 1);
-    gameOver = true;
+    buttonDisabled = true;
     scores.update(
       (item) =>
         (item = [
@@ -38,8 +39,8 @@
     setScores($scores);
   }
   function switchPlayer() {
-    if (gameOver) {
-      turn_info = "Finished ! Refresh to play again !";
+    if (buttonDisabled && gameOverMessage) {
+      turn_info = "Finished ! Reset to play again !";
     } else {
       playerColor = player === playerTwo ? "blue" : "red";
       player = player === playerTwo ? playerOne : playerTwo;
@@ -248,7 +249,7 @@
     switchPlayer();
   }
   function handleReset() {
-    gameOver = false;
+    buttonDisabled = false;
     player = playerOne;
     gameOverMessage = null;
     playerColor = "blue";
@@ -256,9 +257,23 @@
     for (let i = 0, k = 0; i < 5; i++) {
       for (let j = 0; j < 7; j++) {
         gameMatrix[i][j].style.background = defaultColor;
-        gameMatrix[i][j].value = null;
+        gameMatrix[i][j].value = "";
       }
     }
+  }
+  // RANDOM CPU PLAYER IMPLEMENTATIONS
+  $: if (player === playerTwo) {
+    let i, j;
+    do {
+      i = Math.floor((Math.random() * 108) % 4);
+      j = Math.floor((Math.random() * 108) % 6);
+    } while (gameMatrix[i][j].value !== null && gameMatrix[i][j].disabled);
+    gameMatrix[i][j].value = playerColor;
+    gameMatrix[i][j].style.background = playerColor;
+    gameMatrix[i][j].disabled = true;
+    console.log(gameMatrix);
+    checkMatrix(i, j, playerColor);
+    switchPlayer();
   }
 </script>
 
@@ -368,7 +383,7 @@
                 key={row}
                 style="background:{defaultColor};"
                 on:click={handleClick}
-                disabled={gameOver} />
+                disabled={buttonDisabled} />
             </td>
           {/each}
         </tr>
