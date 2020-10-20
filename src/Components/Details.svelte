@@ -29,9 +29,22 @@
     height: auto;
     min-width: 35%;
     padding: 2.5rem 0;
-    border: 4px groove #660b0bde;
+    /* border: 1px groove #660b0bde; */
     border-image: space;
-    border-radius: 2rem;
+    -moz-box-shadow: inset 0 0 10px black;
+    -webkit-box-shadow: inset 0 0 10px black;
+    box-shadow: inset 1rem 1rem 10rem #660b0bde;
+    clip-path: polygon(
+      0 10%,
+      10% 0,
+      90% 0,
+      100% 10%,
+      100% 90%,
+      90% 100%,
+      10% 100%,
+      0% 90%,
+      0% 10%
+    );
     background-image: linear-gradient(
       to bottom,
       rgba(161, 79, 238, 0.384),

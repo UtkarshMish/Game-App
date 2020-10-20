@@ -6,11 +6,10 @@
   let buttonDisabled = false;
   let gameButtons = [];
   let gameMatrix = [[]];
-  const playerOne = $name;
   const playerTwo = "CPU";
   let gameOverMessage = null;
   let playerColor = "blue";
-  let player = playerOne;
+  let player = $name;
   let rowValue = [...Array(7).keys()];
   let colValue = [...Array(5).keys()];
   let defaultColor = "rgb(107, 106, 106)";
@@ -20,7 +19,9 @@
     createMatrix();
   });
 
-  let turn_info = player + " : Your turn to pick the chip";
+  let turn_info;
+  $: turn_info =
+    (player == playerTwo ? playerTwo : $name) + " : Your turn to pick the chip";
   function reportWin(row, column) {
     buttonDisabled = true;
     gameOverMessage =
@@ -31,8 +32,8 @@
         (item = [
           ...$scores,
           {
-            name: playerOne,
-            score: player === playerOne ? "Won" : "Lost",
+            name: $name,
+            score: player === $name ? "Won" : "Lost",
           },
         ])
     );
@@ -43,7 +44,7 @@
       turn_info = "Finished ! Reset to play again !";
     } else {
       playerColor = player === playerTwo ? "blue" : "red";
-      player = player === playerTwo ? playerOne : playerTwo;
+      player = player === playerTwo ? $name : playerTwo;
       turn_info = player + " : Your Turn pick any  " + playerColor + " chip .";
     }
   }
@@ -267,7 +268,7 @@
   }
   function handleReset() {
     buttonDisabled = false;
-    player = playerOne;
+    player = $name;
     gameOverMessage = null;
     playerColor = "blue";
     turn_info = player + " : Your turn to pick the chip";
