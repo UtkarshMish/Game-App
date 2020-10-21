@@ -69,7 +69,14 @@
     transition: all 0.2s cubic-bezier(0.6, 0.04, 0.98, 0.335);
   }
   input:focus {
-    transform: scale(1.1);
+    -webkit-transform: scale(1.08);
+    transform: scale(1.02);
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  input:placeholder-shown {
+    transform: scale(0.95);
+    transition: all 0.2s ease-in;
   }
   input[type="radio"] {
     height: 26px;
