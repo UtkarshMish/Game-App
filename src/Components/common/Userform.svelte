@@ -5,6 +5,7 @@
   export let handleSubmit = null;
   export let valueA = "";
   export let valueB = "";
+  export let valueC = "";
   let name = null;
   let years = null;
   let Errors = [{ error: null }, { error: null }];
@@ -110,6 +111,7 @@
         name="game_type"
         value="single-player"
         id="single-player"
+        bind:group={valueC}
         checked
         required /></label>
     <label for="multi-player">Multi Player
@@ -117,7 +119,8 @@
         type="radio"
         name="game_type"
         value="multi-player"
-        id="multi-player" /></label>
+        id="multi-player"
+        bind:group={valueC} /></label>
   </div>
   <ul style="text-align:left;">
     {#each Errors as errorValues}

@@ -34,7 +34,7 @@
     );
     background-position: 58% 50%;
     background-size: 500%;
-    animation: changeBackground 15s ease-out 0s alternate infinite;
+    animation: changeBackground 15s ease-out 1s alternate infinite forwards;
   }
   @media (min-width: 640px) {
     main {
@@ -46,7 +46,7 @@
       background-position: 22% 0%;
     }
     100% {
-      background-position: 64% 54%;
+      background-position: 60% 50%;
     }
   }
 </style>

@@ -1,19 +1,20 @@
 <script>
   import { redirect, show } from "page";
   import { onMount } from "svelte";
-  import userAuthenticated from "../utils/authentication";
+  import userAuthenticated, {
+    setAuthentication,
+  } from "../utils/authentication";
   import Userform from "./common/Userform.svelte";
-  import { age, name } from "../store/store";
+  import { age, game_type, name } from "../store/store";
   let isNotValid = true;
   onMount(() => {
     isNotValid = !userAuthenticated($name, $age);
     if (!isNotValid) redirect("/game");
   });
   const nameHolder = "Enter your Name: ";
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     if (name.length !== 0 && age.length !== 0) {
-      localStorage.setItem("name", $name);
-      localStorage.setItem("age", $age);
+      setAuthentication($name, $age, $game_type);
       show("/game");
     }
   };
@@ -79,6 +80,7 @@
         valueHolderA={nameHolder}
         bind:valueA={$name}
         bind:valueB={$age}
+        bind:valueC={$game_type}
         {handleSubmit} />
     </div>
   </div>
