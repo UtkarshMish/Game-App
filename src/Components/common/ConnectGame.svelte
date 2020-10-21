@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
   import { getScores, setScores } from "../../utils/scores";
-  import { name, scores } from "../../store/store";
-
+  import { name, scores, sound_on } from "../../store/store";
+  import { playSound } from "../../utils/sound";
   let buttonDisabled = false;
   let gameButtons = [];
   let gameMatrix = [[]];
@@ -258,13 +258,14 @@
     checkIt(count, index, k);
   }
   function handleClick(e) {
+    playSound($sound_on);
     e.target.value = playerColor;
     e.target.style.background = playerColor;
     e.target.disabled = true;
     const i = parseInt(e.target.getAttribute("key"));
     const k = parseInt(e.target.name);
     checkMatrix(k, i, playerColor);
-    switchPlayer();
+    switchPlayer($sound_on);
   }
   function handleReset() {
     buttonDisabled = false;
@@ -286,6 +287,7 @@
       i = Math.floor((Math.random() * 108) % 4);
       j = Math.floor((Math.random() * 108) % 6);
     } while (gameMatrix[i][j].value !== null && gameMatrix[i][j].disabled);
+    playSound();
     gameMatrix[i][j].value = playerColor;
     gameMatrix[i][j].style.background = playerColor;
     gameMatrix[i][j].disabled = true;

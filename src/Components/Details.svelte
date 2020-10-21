@@ -73,7 +73,7 @@
 {#if isNotValid}
   <div class="info__container">
     <div class="heading">
-      <h3 class="main__heading">Enter Your Details</h3>
+      <h3 class="main__heading">Enter Player Info</h3>
     </div>
     <div class="body">
       <Userform

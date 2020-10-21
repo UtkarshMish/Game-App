@@ -1,8 +1,9 @@
 <script>
   import { clearAuthentication, setName } from "../../utils/authentication";
-
-  import { age, name } from "../../store/store";
+  import { Volume2Icon, VolumeXIcon } from "svelte-feather-icons";
+  import { age, name, sound_on } from "../../store/store";
   import { redirect } from "page";
+  import { setSound } from "../../utils/sound";
   let newName = $name;
   let showName = false;
   function handleQuit() {
@@ -28,6 +29,10 @@
       name.update((newValue) => (newValue = localStorage.getItem("name")));
     }
   }
+  function toggleSound() {
+    sound_on.update((sound) => (sound = !sound));
+    setSound($sound_on);
+  }
 </script>
 
 <style>
@@ -45,6 +50,9 @@
     justify-content: space-between;
     text-align-last: center;
   }
+  .option:not(:last-child) {
+    border-bottom: 3px groove #00ff377d;
+  }
   label {
     font: bold message-box;
   }
@@ -55,10 +63,18 @@
     color: tomato;
     font-weight: bolder;
     font-size: x-large;
-    margin-top: 25%;
+    margin-top: 45%;
     align-self: flex-end;
     border-radius: 2rem;
     border: 5px groove greenyellow;
+  }
+  span {
+    align-self: normal;
+    font-size: 1.2rem;
+    text-align-last: center;
+  }
+  div.sound_option {
+    width: fit-content;
   }
 </style>
 
@@ -67,8 +83,8 @@
     <h1>Game Settings</h1>
   </div>
   <div class="option">
-    <label for="difficulty">Select Difficulty: </label>
-    <select name="difficulty">
+    <label for="difficulty" id="difficulty">Select Difficulty: </label>
+    <select name="difficulty" id="difficulty">
       <option value={DIFFICULTY.EASY}>{DIFFICULTY.EASY}</option>
       <option value={DIFFICULTY.MEDIUM}>{DIFFICULTY.MEDIUM}</option>
       <option value={DIFFICULTY.HARD}>{DIFFICULTY.HARD}</option>
@@ -87,6 +103,16 @@
     {/if}
     <button type="submit">{!showName ? 'Change Name' : 'Set'}</button>
   </form>
+  <div class="option">
+    <span>Music </span>
+    <div class="sound_option" on:click={toggleSound}>
+      {#if $sound_on}
+        <Volume2Icon size="32" />
+      {:else}
+        <VolumeXIcon size="32" />
+      {/if}
+    </div>
+  </div>
   <div class="option" on:click={handleQuit}>
     <button class="quit-button">QUIT GAME</button>
   </div>

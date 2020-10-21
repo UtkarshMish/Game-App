@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { PlayIcon } from "svelte-feather-icons";
   const dispatch = createEventDispatcher();
   export let valueHolderA = "Enter: ";
   export let handleSubmit = null;
@@ -38,6 +39,11 @@
     font: 1.25rem bolder;
     outline: none;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    max-width: fit-content;
   }
   .submit:hover {
     transform: translateY(-0.1rem);
@@ -60,6 +66,10 @@
     align-self: center;
     background: rgba(44, 44, 3, 0.801);
     color: azure;
+    transition: all 0.2s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  }
+  input:focus {
+    transform: scale(1.1);
   }
   input[type="radio"] {
     height: 26px;
@@ -129,5 +139,8 @@
       {/if}
     {/each}
   </ul>
-  <input type="submit" class="submit" value="Start Game" />
+  <button type="submit" class="submit">
+    <PlayIcon size="32" />
+    <span>Start Game</span>
+  </button>
 </form>
