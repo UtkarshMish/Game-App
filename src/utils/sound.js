@@ -3,7 +3,7 @@ export function playSound(isSet)
 {
   if (isSet) {
     new Audio(
-      "click_sound.mp3"
+      "/sound/click_sound.mp3"
     ).play();
   }
 }

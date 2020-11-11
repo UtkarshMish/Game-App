@@ -36,7 +36,7 @@
     border-radius: 1rem;
     background: linear-gradient(to right, #134124bd 25%, #23241479 75%);
     color: whitesmoke;
-    font: 1.25rem bolder;
+    font: 2rem bolder;
     outline: none;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
@@ -56,8 +56,8 @@
     flex-direction: column;
   }
   input {
-    height: 3rem;
-    width: 15rem;
+    height: 5rem;
+    width: 25rem;
     border-radius: 1rem;
     outline: none;
     font-size: x-large;
@@ -112,7 +112,7 @@
   }
 </style>
 
-<form on:submit|preventDefault={handleSubmit}>
+<form on:submit|preventDefault={() => handleSubmit(Errors)}>
   <input
     type="text"
     maxlength="30"

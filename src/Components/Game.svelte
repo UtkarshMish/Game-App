@@ -11,7 +11,7 @@
   onMount(async () => {
     isNotValid = !userAuthenticated($name, $age);
     if (isNotValid) {
-      redirect("/");
+      redirect("/details");
       return;
     }
   });
@@ -50,16 +50,16 @@
     width: inherit;
     max-width: 15%;
     border-left: 2px groove #660b0bde;
-    margin-left: 1rem;
+    margin-left: 1.5rem;
     padding: 0 5%;
     border-radius: 1vmax;
     justify-content: center;
   }
   h3 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     border-bottom: 4px groove whitesmoke;
-    margin: 1rem 3rem;
-    padding: 1rem;
+    margin: 1.5rem 3.5rem;
+    padding: 1.5rem;
   }
 
   @media only screen and (max-width: 900px) {

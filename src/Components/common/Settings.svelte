@@ -39,6 +39,7 @@
   div {
     width: 100%;
     margin-bottom: 1vmax;
+    font-size: 1.5rem;
   }
   div.heading {
     border-bottom: 4px solid white;
@@ -70,7 +71,7 @@
   }
   span {
     align-self: normal;
-    font-size: 1.2rem;
+    font-size: 2.2rem;
     text-align-last: center;
   }
   div.sound_option {

@@ -12,8 +12,14 @@
     if (!isNotValid) redirect("/game");
   });
   const nameHolder = "Enter your Name: ";
-  const handleSubmit = (e) => {
-    if (name.length !== 0 && age.length !== 0) {
+  const handleSubmit = (errors) => {
+    const { error: nameError } = errors[0];
+    const { error: ageError } = errors[1];
+    if (
+      name.length !== 0 &&
+      age.length !== 0 &&
+      (nameError || ageError) == null
+    ) {
       setAuthentication($name, $age, $game_type);
       show("/game");
     }
@@ -27,15 +33,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto;
-    min-width: 35%;
+    min-height: 45rem;
+    min-width: 55rem;
     padding: 2.5rem 0;
     /* border: 1px groove #660b0bde; */
     border-image: space;
-    border: 1px groove #143a4962;
     -moz-box-shadow: inset 0rem 0rem 5rem #143a4962;
     -webkit-box-shadow: inset 0rem 0rem 5rem #143a4962;
-    box-shadow: inset 0rem 0rem 5rem #143a4962;
     clip-path: polygon(
       0 10%,
       10% 0,
@@ -52,6 +56,7 @@
       rgba(161, 79, 238, 0.384),
       rgba(182, 68, 68, 0.692)
     );
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   div.heading {
@@ -63,10 +68,10 @@
     box-sizing: content-box;
   }
   div.body {
-    font: normal large;
+    font: xx-large;
   }
   h3.main__heading {
-    margin: 1rem;
+    margin: 2rem;
   }
 </style>
 

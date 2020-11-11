@@ -3,8 +3,10 @@
   import AboutUs from "./Components/AboutUs.svelte";
   import Details from "./Components/Details.svelte";
   import Game from "./Components/Game.svelte";
+  import Home from "./Components/Home.svelte";
   let page;
-  router("/", () => (page = Details));
+  router("/", () => (page = Home));
+  router("/details", () => (page = Details));
   router("/about", () => (page = AboutUs));
   router("/game", () => (page = Game));
   router.start();
@@ -19,7 +21,11 @@
     justify-content: center;
     align-items: center;
   }
+  :global(html) {
+    font-size: 62.5%;
+  }
   :global(body) {
+    font-size: 1rem;
     background: linear-gradient(
       264.51deg,
       rgb(109, 85, 0) 4.38%,
@@ -34,7 +40,7 @@
     );
     background-position: 58% 50%;
     background-size: 500%;
-    animation: changeBackground 15s ease-out 1s alternate infinite forwards;
+    animation: changeBackground 15s ease-in-out 0s alternate forwards;
   }
   @media (min-width: 640px) {
     main {
@@ -46,7 +52,7 @@
       background-position: 22% 0%;
     }
     100% {
-      background-position: 60% 50%;
+      background-position: 50% 55%;
     }
   }
 </style>

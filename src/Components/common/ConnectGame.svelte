@@ -299,6 +299,7 @@
 <style>
   div {
     line-height: 1;
+    font-size: 1.5rem;
   }
   button.reset-button {
     color: black;
@@ -312,12 +313,12 @@
   h4 {
     font-style: italic;
     font-weight: bold;
-    font-size: 1.05rem;
+    font-size: 2rem;
     color: peachpuff;
   }
   h5 {
     font-weight: 900;
-    font-size: 1rem;
+    font-size: 1.8rem;
     background: linear-gradient(to right, #cad88a, #84b304);
     border-radius: 2rem;
     background-clip: text;
@@ -338,7 +339,7 @@
   }
   button.options {
     display: inline-block;
-    font-size: 3.8rem;
+    font-size: 5.5rem;
     border-radius: 50%;
     height: 100%;
     width: 100%;
@@ -368,7 +369,7 @@
   }
   @media only screen and (min-width: 900px) {
     button.options {
-      font-size: 4.86rem;
+      font-size: 7.7rem;
     }
   }
 </style>
